@@ -1,32 +1,3 @@
-"""
-=============================================================================
-JOGO: ICE FISHING - Seminário Universitário de Computação Gráfica
-=============================================================================
-Autor: Gerado com fins acadêmicos
-Biblioteca: Pygame
-Tema: Inspirado no mini-game 'Ice Fishing' do Club Penguin
-
-TRANSFORMAÇÕES GEOMÉTRICAS IMPLEMENTADAS:
-------------------------------------------
-1. TRANSLAÇÃO   → Classe Hook  → método update()
-                  O anzol se move verticalmente no eixo Y com as setas
-                  do teclado. A posição (rect.y) é incrementada/decrementada.
-
-2. ROTAÇÃO      → Classe Hook  → método draw()
-                  A imagem do anzol é rotacionada com pygame.transform.rotate()
-                  simulando a resistência da água conforme se move.
-
-3. ESCALA       → Classe Fish  → método apply_scale()
-                  Ao colidir com o power-up, o peixe tem sua imagem
-                  redimensionada com pygame.transform.scale().
-
-4. REFLEXÃO     → Classe Fish  → método update()
-                  Ao trocar de direção, a imagem é espelhada com
-                  pygame.transform.flip(surface, flip_x=True, flip_y=False).
-
-=============================================================================
-"""
-
 import pygame
 import sys
 import math
@@ -687,7 +658,7 @@ class IceFishingGame:
 
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption("🐟 Ice Fishing — Computação Gráfica")
+        pygame.display.set_caption("Ice Fishing - Computacao Grafica")
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock  = pygame.time.Clock()
 
@@ -848,7 +819,7 @@ class IceFishingGame:
         )
         for fish in list(self.fish_group):
             if hook_rect.colliderect(fish.rect):
-                size_bonus = " 🔥 GRANDE!" if fish.scaled else ""
+                size_bonus = " GRANDE!" if fish.scaled else ""
                 pts = 2 if fish.scaled else 1
                 self.score += pts
                 self._show_message(f"+{pts} peixe{size_bonus}", 1.2)
@@ -869,9 +840,9 @@ class IceFishingGame:
             hit_fish = pygame.sprite.spritecollide(pu, self.fish_group, False)
             for fish in hit_fish:
                 if not fish.scaled:
-                    # ← ESCALA (T3): aplica redimensionamento no peixe
+                    # <- ESCALA (T3): aplica redimensionamento no peixe
                     fish.apply_scale(factor=2.0)
-                    self._show_message("⭐ Power-up! Peixe CRESCEU!", 1.8)
+                    self._show_message("Power-up! Peixe CRESCEU!", 1.8)
                     pu.kill()   # Remove o power-up após uso
                     break
 
@@ -887,7 +858,7 @@ class IceFishingGame:
         for pu in list(self.powerup_group):
             if hook_rect.colliderect(pu.rect):
                 self.score += 1
-                self._show_message("⭐ Voce pegou a estrela! +1", 1.5)
+                self._show_message("Voce pegou a estrela! +1", 1.5)
                 pu.kill()
                 return
 
@@ -903,7 +874,7 @@ class IceFishingGame:
         for boot in self.boot_group:
             if hook_rect.colliderect(boot.rect):
                 self.game_over = True
-                self._show_message("VOCE PESCOU UMA BOTA! FIM DE JOGO", 3.0)
+                self._show_message("", 3.0)
                 return
 
     # ------------------------------------------------------------------
@@ -978,7 +949,7 @@ class IceFishingGame:
         self.screen.blit(panel, (10, 10))
 
         score_surf = self.font_big.render(
-            f"🐟 Peixes: {self.score}", True, COLOR_WHITE)
+            f"Peixes: {self.score}", True, COLOR_WHITE)
         self.screen.blit(score_surf, (18, 18))
 
         time_surf = self.font_small.render(
@@ -997,20 +968,20 @@ class IceFishingGame:
             self.screen.blit(surf, (10, SCREEN_HEIGHT - 90 + i * 20))
 
         # Legenda das transformações (canto superior direito)
-        legend_lines = [
-            ("T1 TRANSLAÇÃO", (100, 200, 255)),
-            ("T2 ROTAÇÃO",    (255, 220, 100)),
-            ("T3 ESCALA",     (100, 255, 150)),
-            ("T4 REFLEXÃO",   (255, 130, 130)),
-        ]
-        lx = SCREEN_WIDTH - 180
-        legend_panel = pygame.Surface((175, 90), pygame.SRCALPHA)
-        legend_panel.fill((0, 0, 0, 130))
-        self.screen.blit(legend_panel, (lx - 5, 8))
+        # legend_lines = [
+        #     ("T1 TRANSLAÇÃO", (100, 200, 255)),
+        #     ("T2 ROTAÇÃO",    (255, 220, 100)),
+        #     ("T3 ESCALA",     (100, 255, 150)),
+        #     ("T4 REFLEXÃO",   (255, 130, 130)),
+        # ]
+        # lx = SCREEN_WIDTH - 180
+        # legend_panel = pygame.Surface((175, 90), pygame.SRCALPHA)
+        # legend_panel.fill((0, 0, 0, 130))
+        # self.screen.blit(legend_panel, (lx - 5, 8))
 
-        for i, (text, color) in enumerate(legend_lines):
-            surf = self.font_small.render(text, True, color)
-            self.screen.blit(surf, (lx, 12 + i * 20))
+        # for i, (text, color) in enumerate(legend_lines):
+        #     surf = self.font_small.render(text, True, color)
+        #     self.screen.blit(surf, (lx, 12 + i * 20))
 
         # Mensagem temporária (centro da tela)
         if self.message and self.message_timer > 0:
@@ -1027,7 +998,7 @@ class IceFishingGame:
             overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 140))
             self.screen.blit(overlay, (0, 0))
-            pause_surf = self.font_big.render("⏸ PAUSADO", True, COLOR_WHITE)
+            pause_surf = self.font_big.render("PAUSADO", True, COLOR_WHITE)
             pause_rect = pause_surf.get_rect(center=(SCREEN_WIDTH // 2,
                                                      SCREEN_HEIGHT // 2))
             self.screen.blit(pause_surf, pause_rect)
